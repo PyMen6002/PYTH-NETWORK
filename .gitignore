@@ -1,0 +1,20 @@
+# Entornos virtuales
+blockchain-env/
+venv/
+.env/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# IDEs
+.vscode/
+.idea/
+
+# SO
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
