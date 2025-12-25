@@ -24,10 +24,10 @@ Bootstrap a node:
 ```bash
 <<<<<<< HEAD
 LINUX:
-API_PORT=5000 P2P_PORT=6000 python -m backend.app
+API_PORT=5000 P2P_PORT=6000 P2P_SEEDS=72.62.58.41:6000 python -m backend.app
 
 Windows (powershell):
-$env:API_PORT="5000"; $env:P2P_HOST="localhost"; $env:P2P_PORT="6000"; python -m backend.app
+$env:API_PORT="5000"; $env:P2P_PORT="6000"; $env:P2P_SEEDS="72.62.58.41:6000"; python -m backend.app
 =======
 API_PORT=5000 P2P_PORT=6000 python -m backend.app
 
@@ -43,16 +43,16 @@ Start extra nodes pointing to the seed (same machine or others, adjust IP):
 ```bash
 <<<<<<< HEAD
 Linux:
-PEER=True API_PORT=5001 P2P_PORT=6001 P2P_SEEDS=localhost:6000 python -m backend.app
+PEER=True API_PORT=5001 P2P_PORT=6001 P2P_SEEDS=72.62.58.41:6000 python -m backend.app
 # On another machine:
-# PEER=True API_PORT=5000 P2P_PORT=6000 P2P_SEEDS=<seed_ip>:6000 python -m backend.app
+# PEER=True API_PORT=5000 P2P_PORT=6000 P2P_SEEDS=72.62.58.41:6000 python -m backend.app
 Windows (powershell):
-$env:PEER="True"; $env:API_PORT="5001"; $env:P2P_HOST="localhost"; $env:P2P_PORT="6001"; $env:P2P_SEEDS="localhost:6000"; python -m backend.app
+$env:PEER="True"; $env:API_PORT="5001"; $env:P2P_HOST="localhost"; $env:P2P_PORT="6001"; $env:P2P_SEEDS="72.62.58.41:6000"; python -m backend.app
 
 =======
-PEER=True API_PORT=5001 P2P_PORT=6001 P2P_SEEDS=localhost:6000 python -m backend.app
+PEER=True API_PORT=5001 P2P_PORT=6001 P2P_SEEDS=72.62.58.41:6000 python -m backend.app
 # On another machine:
-# PEER=True API_PORT=5000 P2P_PORT=6000 P2P_SEEDS=<seed_ip>:6000 python -m backend.app
+# PEER=True API_PORT=5000 P2P_PORT=6000 P2P_SEEDS=72.62.58.41:6000 python -m backend.app
 >>>>>>> 07fdc29 (up1)
 ```
 
