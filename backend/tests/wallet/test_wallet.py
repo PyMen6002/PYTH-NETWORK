@@ -1,7 +1,7 @@
 from backend.wallet.wallet import Wallet
 from backend.blockchain.blockchain import Blockchain
-from backend.config import STARTING_BALANCE
 from backend.wallet.transaction import Transaction
+from backend.economics import block_reward
 
 
 def test_verify_valid_signature():
@@ -20,22 +20,40 @@ def test_verify_invalid_signature():
 
 def test_calculate_balance():
     blockchain = Blockchain()
-    wallet = Wallet()
+    miner = Wallet(blockchain)
+    wallet = Wallet(blockchain)
 
-    assert Wallet.calculate_balance(blockchain, wallet.address) == STARTING_BALANCE
+    # Fund miner
+    blockchain.add_block([Transaction.reward_transaction(miner, block_reward(1)).to_json()])
 
-    amount = 25
-    tx = Transaction(wallet, "recipient", amount)
-    blockchain.add_block([tx.to_json()])
+    # Miner pays wallet
+    incoming_amount = block_reward(1) // 2
+    pay_tx = Transaction(miner, wallet.address, incoming_amount)
+    pay_fee = pay_tx.input["fee"]
+    blockchain.add_block([
+        pay_tx.to_json(),
+        Transaction.reward_transaction(miner, block_reward(2) + pay_fee).to_json()
+    ])
 
-    assert Wallet.calculate_balance(blockchain, wallet.address) == STARTING_BALANCE - amount
+    assert Wallet.calculate_balance(blockchain, wallet.address) == incoming_amount
 
-    received_amount_1 = 10
-    received_tx_1 = Transaction(Wallet(), wallet.address, received_amount_1)
+    # Wallet spends
+    spend_amount = 10
+    spend_tx = Transaction(wallet, "recipient", spend_amount)
+    spend_fee = spend_tx.input["fee"]
+    blockchain.add_block([
+        spend_tx.to_json(),
+        Transaction.reward_transaction(miner, block_reward(3) + spend_fee).to_json()
+    ])
 
-    received_amount_2 = 72
-    received_tx_2 = Transaction(Wallet(), wallet.address, received_amount_2)
-    
-    blockchain.add_block([received_tx_1.to_json(), received_tx_2.to_json()])
+    # Wallet receives again from miner
+    received_amount = 15
+    receive_tx = Transaction(miner, wallet.address, received_amount)
+    fee_2 = receive_tx.input["fee"]
+    blockchain.add_block([
+        receive_tx.to_json(),
+        Transaction.reward_transaction(miner, block_reward(4) + fee_2).to_json()
+    ])
 
-    assert Wallet.calculate_balance(blockchain, wallet.address) == STARTING_BALANCE - amount + received_amount_1 + received_amount_2
+    expected_balance = incoming_amount - spend_amount - spend_fee + received_amount
+    assert Wallet.calculate_balance(blockchain, wallet.address) == expected_balance

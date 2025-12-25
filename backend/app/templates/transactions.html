@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PYTH NETWORK Transactions</title>
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}?v=1" sizes="32x32">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="page">
+    <header class="hero hero-top">
+      <div>
+        <p class="eyebrow">Explorer</p>
+        <h1>Transactions</h1>
+        <p class="lede">Track mempool and recently confirmed transactions with their current status.</p>
+      </div>
+      <div class="hero-actions nav-bar">
+        <a href="{{ url_for('route_default') }}" class="nav-link ghost">Home</a>
+        <a href="{{ url_for('route_wallets_page') }}" class="nav-link ghost">Wallets</a>
+        <a href="{{ url_for('route_config_page') }}" class="nav-link primary">Config</a>
+      </div>
+    </header>
+
+    <main class="grid">
+      <section class="card span-2">
+        <div class="card-header">
+          <div>
+            <p class="eyebrow">Filter</p>
+            <h2>Lookup</h2>
+          </div>
+          <div class="hero-actions nav-bar">
+            <button id="tx-refresh" class="ghost">Refresh</button>
+          </div>
+        </div>
+        <div class="form compact">
+          <label>
+            <span>Address filter (optional)</span>
+            <input type="text" id="tx-address-filter" placeholder="address to filter input/output">
+          </label>
+          <label>
+            <span>Limit (confirmed)</span>
+            <input type="number" id="tx-limit" value="50" min="1" max="200">
+          </label>
+        </div>
+      </section>
+
+      <section class="card span-2">
+        <div class="card-header">
+          <div>
+            <p class="eyebrow">Pending</p>
+            <h2>Mempool</h2>
+          </div>
+          <span class="tag" id="mempool-count">0</span>
+        </div>
+        <div id="mempool-list" class="tx-list"></div>
+      </section>
+
+      <section class="card span-2">
+        <div class="card-header">
+          <div>
+            <p class="eyebrow">Recent blocks</p>
+            <h2>Confirmed</h2>
+          </div>
+          <span class="tag" id="confirmed-count">0</span>
+        </div>
+        <div id="confirmed-list" class="tx-list"></div>
+      </section>
+    </main>
+  </div>
+
+  <div id="toast" class="toast" hidden></div>
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

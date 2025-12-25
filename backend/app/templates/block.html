@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Block {{ block.hash }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="page">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">Block detail</p>
+        <h1>Block {{ block.hash }}</h1>
+        <p class="lede">Height: {{ chain_height }}</p>
+        <p class="lede">Timestamp: {{ human_time }}</p>
+      </div>
+      <a href="{{ url_for('route_default') }}" class="ghost back-link">Back to explorer</a>
+    </header>
+
+    <section class="card">
+      <p class="label">Next hash</p>
+      {% if next_hash %}
+        <p class="mono"><a class="addr-link" href="{{ url_for('route_block_detail', block_hash=next_hash) }}">{{ next_hash }}</a></p>
+      {% else %}
+        <p class="mono">None</p>
+      {% endif %}
+      <p class="label">Hash</p>
+      <p class="mono"><a class="addr-link" href="{{ url_for('route_block_detail', block_hash=block.hash) }}">{{ block.hash }}</a></p>
+      <p class="label">Prev hash</p>
+      {% if prev_hash %}
+        <p class="mono"><a class="addr-link" href="{{ url_for('route_block_detail', block_hash=prev_hash) }}">{{ block.last_hash }}</a></p>
+      {% else %}
+        <p class="mono">{{ block.last_hash }}</p>
+      {% endif %}
+      <p class="label">Timestamp</p>
+      <p class="value mono">{{ human_time }}</p>
+      <p class="label">Difficulty</p>
+      <p class="value mono">{{ block.difficulty }}</p>
+      <p class="label">Nonce</p>
+      <p class="value mono">{{ block.nonce }}</p>
+      <p class="label">Transactions</p>
+    {% for tx in block.data %}
+    <div class="tx">
+      <div class="tx-header">
+        <span class="mono">tx: {{ tx.id or 'n/a' }}</span>
+        <small>{{ 'Reward' if tx.input == {'address': '+--official-mining-reward--+'} else 'Transfer' }}</small>
+      </div>
+      <small>From: <a class="addr-link" href="{{ url_for('route_address_detail', address=tx.input.address) if tx.input and tx.input.address else '#' }}">{{ tx.input.address if tx.input and tx.input.address else 'genesis' }}</a> | Fee: {{ tx.input.fee if tx.input else 0 }}</small>
+      <div class="mono">Outputs:</div>
+      <ul>
+        {% for addr, val in tx.output.items() %}
+          <li><a class="addr-link" href="{{ url_for('route_address_detail', address=addr) }}">{{ addr }}</a>: {{ val }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endfor %}
+  </section>
+</div>
+</body>
+</html>

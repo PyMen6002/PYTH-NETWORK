@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PYTH NETWORK Wallets</title>
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}?v=1" sizes="32x32">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="page">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">Wallets</p>
+        <h1>Manage wallets</h1>
+        <p class="lede">Create, import and review balances. Total balance shown below.</p>
+      </div>
+      <div class="hero-actions nav-bar" style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
+        <div class="unit-toggle">
+          <span class="unit-toggle__label">Display in</span>
+          <select id="display-mode" class="unit-toggle__select">
+            <option value="coin">Coin</option>
+            <option value="unit">Unit</option>
+          </select>
+        </div>
+        <a href="{{ url_for('route_default') }}" class="nav-link ghost">Back</a>
+      </div>
+    </header>
+
+    <div class="grid">
+      <section class="card">
+        <div class="card-header">
+          <div>
+            <p class="eyebrow">Create</p>
+            <h2>New wallet</h2>
+          </div>
+        </div>
+        <p class="hint">Private key is always returned; store it securely.</p>
+        <button id="create-wallet-btn" class="primary">Create wallet</button>
+        <div class="new-wallet" id="new-wallet" hidden>
+          <p class="label">Wallet created (save your keys):</p>
+          <p class="label">Address</p>
+          <pre id="new-wallet-address"></pre>
+          <p class="label">Public Key</p>
+          <pre id="new-wallet-pub"></pre>
+          <p class="label">Private Key (tap to reveal)</p>
+          <pre id="new-wallet-priv" class="blurred"></pre>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card-header">
+          <div>
+            <p class="eyebrow">Import</p>
+            <h2>Existing wallet</h2>
+          </div>
+        </div>
+        <p class="hint">Paste the private key (hex or PEM) and optionally set it as node wallet.</p>
+        <textarea id="import-priv" rows="6" class="hex-input spacious-input wallet-import-input" placeholder="hex or PEM private key"></textarea>
+        <label class="checkbox pill-checkbox import-checkbox">
+          <input type="checkbox" id="import-set-active" checked> Use as node wallet
+        </label>
+        <button id="import-confirm-btn" class="ghost import-btn">Import wallet</button>
+      </section>
+
+      <section class="card span-2">
+        <div class="card-header">
+          <div>
+            <p class="eyebrow">Overview</p>
+            <h2>All wallets</h2>
+          </div>
+          <span class="tag" id="total-balance">Total: 0</span>
+        </div>
+        <div id="wallet-list" class="wallet-list"></div>
+      </section>
+    </div>
+  </div>
+
+  {% include "partials.html" %}
+  <div id="toast" class="toast" hidden></div>
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

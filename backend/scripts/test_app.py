@@ -1,40 +1,40 @@
 import requests
-from backend.wallet.wallet import Wallet
-import time
+import pytest
 
 BASE_URL = "http://localhost:5000"
 
+
+def _api_available() -> bool:
+    try:
+        res = requests.get(f"{BASE_URL}/blockchain", timeout=2)
+        return res.ok
+    except requests.RequestException:
+        return False
+
+
 def get_blockchain():
-    return requests.get(f"{BASE_URL}/blockchain").json()
+    resp = requests.get(f"{BASE_URL}/blockchain", timeout=5)
+    resp.raise_for_status()
+    return resp.json()
 
-def get_blockchain_mine():
-    return requests.get(f"{BASE_URL}/blockchain/mine").json()
-
-def post_wallet_transact(recipient, amount):
-    return requests.post(
-        f"{BASE_URL}/wallet/transact",
-        json={"recipient": recipient, "amount": amount}
-        ).json()
 
 def get_wallet_info():
-    return requests.get(f"{BASE_URL}/wallet/info").json()
+    resp = requests.get(f"{BASE_URL}/wallet/info", timeout=5)
+    resp.raise_for_status()
+    return resp.json()
 
-start_blockchain = get_blockchain()
-print(f"start_blockchain: {start_blockchain}")
 
-recipient = Wallet().address
-post_wallet_transact_1 = post_wallet_transact(recipient, 20)
-print(f'\npost_wallet_transact_1: {post_wallet_transact_1}')
+pytestmark = pytest.mark.skipif(
+    not _api_available(),
+    reason="HTTP API not running at localhost:5000; start backend.app to run this smoke test"
+)
 
-time.sleep(1)
 
-post_wallet_transact_2 = post_wallet_transact(recipient, 26)
-print(f'\npost_wallet_transact_2: {post_wallet_transact_2}')
+def test_api_smoke():
+    chain = get_blockchain()
+    assert isinstance(chain, list)
 
-time.sleep(1)
-
-mined_block = get_blockchain_mine()
-print(f'\nmined_block: {mined_block}')
-
-wallet_info = get_wallet_info()
-print(f"\nwallet info: {wallet_info}")
+    info = get_wallet_info()
+    assert isinstance(info, dict)
+    assert "address" in info
+    assert "balance" in info

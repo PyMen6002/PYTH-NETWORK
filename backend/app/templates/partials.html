@@ -1,0 +1,56 @@
+<div class="modal" id="import-modal" hidden>
+  <div class="modal-body">
+    <h3>Import wallet</h3>
+    <p class="hint">Paste the private key (hex). Optionally set it as the node wallet.</p>
+    <textarea id="import-priv" rows="6" class="hex-input" placeholder="hex private key"></textarea>
+    <label class="checkbox pill-checkbox">
+      <input type="checkbox" id="import-set-active" checked> Use as node wallet
+    </label>
+    <div class="modal-actions">
+      <button id="import-confirm-btn" class="primary">Import</button>
+      <button id="import-cancel-btn" class="ghost">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="wallet-detail-modal" hidden>
+  <div class="modal-body">
+    <h3 id="detail-alias">Wallet detail</h3>
+    <p class="label">Address</p>
+    <pre id="detail-address" class="mono"></pre>
+    <p class="label">Balance</p>
+    <p id="detail-balance" class="value"></p>
+    <p class="label">Public Key</p>
+    <pre id="detail-public" class="mono" style="max-height:160px; overflow:auto;"></pre>
+    <p class="label">Private Key (tap to reveal)</p>
+    <pre id="detail-private" class="mono blurred" style="max-height:160px; overflow:auto;"></pre>
+    <div class="modal-actions">
+      <button id="detail-set-active" class="primary">Set as node wallet</button>
+      <button id="detail-close" class="ghost">Close</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="alias-modal" hidden>
+  <div class="modal-body">
+    <h3>Node alias</h3>
+    <p class="hint">Set a local alias for this node wallet.</p>
+    <input type="text" id="node-alias" placeholder="My node name" style="width:100%; background:#0f172a; border:1px solid var(--border); border-radius:10px; padding:10px; color:var(--text);">
+    <div class="modal-actions">
+      <button id="alias-save-btn" class="primary">Save</button>
+      <button id="alias-cancel-btn" class="ghost">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="rename-wallet-modal" hidden>
+  <div class="modal-body">
+    <h3>Rename wallet</h3>
+    <p class="hint">Update the display name for this wallet.</p>
+    <input type="text" id="rename-wallet-input" placeholder="Wallet name" style="width:100%; background:#0f172a; border:1px solid var(--border); border-radius:10px; padding:10px; color:var(--text);">
+    <div class="modal-actions">
+      <button id="rename-wallet-save" class="primary">Save</button>
+      <button id="rename-wallet-cancel" class="ghost">Cancel</button>
+    </div>
+  </div>
+</div>

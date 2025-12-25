@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PYTH NETWORK Scan</title>
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}?v=1" sizes="32x32">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="page">
+    <header class="hero hero-top">
+      <div class="brand brand-stack">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="PYTH NETWORK logo" class="brand-logo">
+        <div>
+          <p class="eyebrow">PYTH NETWORK</p>
+          <h1>PYTH NETWORK Monitor</h1>
+          <p class="lede">Explore the PYTH NETWORK chain, mine blocks, and manage your wallet without a central node.</p>
+        </div>
+      </div>
+      <div class="hero-actions nav-bar">
+        <div class="unit-toggle">
+          <span class="unit-toggle__label">Display in</span>
+          <select id="display-mode" class="unit-toggle__select">
+            <option value="coin">Coin</option>
+            <option value="unit">Unit</option>
+          </select>
+        </div>
+        <button id="refresh-btn" class="ghost">Refresh</button>
+        <a href="{{ url_for('route_transactions_page') }}" class="nav-link ghost">Transactions</a>
+        <a href="{{ url_for('route_config_page') }}" class="nav-link primary">Config</a>
+      </div>
+    </header>
+
+    <main class="grid">
+      <section class="card">
+        <div class="card-header">
+          <div>
+            <p class="eyebrow">Node status</p>
+            <h2>Node wallet <span class="tag" id="node-alias-tag">Unnamed</span> <span class="status-dot" id="node-status"></span></h2>
+          </div>
+          <div class="hero-actions nav-bar">
+            <button id="open-alias-btn" class="ghost">Config</button>
+            <a href="{{ url_for('route_wallets_page') }}" class="nav-link ghost">Wallets</a>
+          </div>
+        </div>
+        <div class="wallet-info" id="wallet-info">
+          <div>
+            <p class="label">Address</p>
+            <p class="value mono" id="wallet-address">-</p>
+          </div>
+          <div>
+            <p class="label">Balance</p>
+            <p class="value" id="wallet-balance">-</p>
+          </div>
+          <div>
+            <p class="label">Public Key</p>
+            <pre class="mono" id="wallet-public" style="max-height:140px; overflow:auto;">-</pre>
+          </div>
+          <div>
+            <p class="label">Private Key (tap to reveal)</p>
+            <pre class="mono blurred" id="wallet-private" style="max-height:140px; overflow:auto;">-</pre>
+          </div>
+        </div>
+        <div class="new-wallet" id="new-wallet" hidden>
+          <p class="label">Wallet created (save your keys):</p>
+          <p class="label">Address</p>
+          <pre id="new-wallet-address"></pre>
+          <p class="label">Public Key</p>
+          <pre id="new-wallet-pub"></pre>
+          <p class="label">Private Key (tap to reveal)</p>
+          <pre id="new-wallet-priv" class="blurred"></pre>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card-header">
+          <div>
+            <p class="eyebrow">Transactions</p>
+            <h2>Send to address</h2>
+          </div>
+        </div>
+        <form class="form" id="tx-form">
+          <label>
+            <span>Recipient</span>
+            <input type="text" id="tx-recipient" required placeholder="wallet address">
+          </label>
+          <label>
+            <span id="amount-label">Amount</span>
+            <input type="number" id="tx-amount" min="0" step="0.0001" required>
+          </label>
+          <button type="submit" class="primary">Send transaction</button>
+          <div class="hint" id="fee-display">Fee: -</div>
+        </form>
+      </section>
+
+      <section class="card span-2">
+        <div class="card-header">
+          <div>
+            <p class="eyebrow">Explorer</p>
+            <h2>Blockchain</h2>
+          </div>
+          <span id="block-count" class="tag">0 blocks</span>
+        </div>
+        <div class="form compact">
+          <label>
+            <span>Search (hash, address, tx id, difficulty)</span>
+            <input type="text" id="block-search" placeholder="Type to filter">
+          </label>
+        </div>
+        <div id="blocks" class="blocks"></div>
+      </section>
+    </main>
+  </div>
+
+  <div id="toast" class="toast" hidden></div>
+  {% include "partials.html" %}
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

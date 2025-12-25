@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PYTH NETWORK Config</title>
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}?v=1" sizes="32x32">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="page">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">Node</p>
+        <h1>Miner settings</h1>
+        <p class="lede">Set miner name, reward address, and toggle auto-mining.</p>
+      </div>
+      <div class="hero-actions">
+        <a href="{{ url_for('route_default') }}" class="ghost" style="text-decoration:none; padding:8px 12px; border-radius:10px; border:1px solid var(--border); color:var(--text);">Back</a>
+      </div>
+    </header>
+
+    <main class="grid">
+      <section class="card span-2">
+        <div class="card-header">
+          <div>
+            <p class="eyebrow">Miner profile</p>
+            <h2>Auto-mining</h2>
+          </div>
+        </div>
+        <div class="form">
+          <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
+            <span style="font-weight:600;">Enable auto-mining</span>
+            <label class="checkbox" title="Enable or disable background mining" style="display:flex; align-items:center; gap:8px; padding:10px 14px; border:1px solid var(--border); border-radius:12px; background:var(--panel);">
+              <input type="checkbox" id="auto-mine-toggle">
+            </label>
+          </div>
+          <label>
+            <span>Miner name</span>
+            <input type="text" id="miner-name-input" placeholder="e.g. Rig-1">
+          </label>
+          <label>
+            <span>Reward address (leave blank to use node wallet)</span>
+            <input type="text" id="miner-address-input" placeholder="wallet address">
+          </label>
+          <label>
+            <span>Auto refresh interval (seconds, 0 = off)</span>
+            <input type="number" id="refresh-interval-input" min="0" step="1" placeholder="e.g. 10">
+          </label>
+          <div class="hint">Default wallet address: <span class="mono" id="default-wallet-addr">-</span></div>
+          <div class="actions">
+            <button id="save-config-btn" class="primary">Save config</button>
+            <button id="refresh-config-btn" class="ghost">Refresh</button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="toast" class="toast" hidden></div>
+  {% include "partials.html" %}
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

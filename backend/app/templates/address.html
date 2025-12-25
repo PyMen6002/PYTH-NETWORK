@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Address {{ address }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="page">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">Address</p>
+        <h1>{{ address }}</h1>
+        <p class="lede">Balance: {{ balance }}</p>
+      </div>
+      <a href="{{ url_for('route_default') }}" class="ghost" style="text-decoration:none; padding:10px 14px; border-radius:10px; border:1px solid var(--border); color:var(--text);">Back to explorer</a>
+    </header>
+    <section class="card">
+      <p class="label">Balance</p>
+      <p class="value mono">{{ balance }}</p>
+      <p class="label">Address</p>
+      <p class="mono">{{ address }}</p>
+      <p class="hint">Data shown is computed locally from the current chain.</p>
+    </section>
+  </div>
+</body>
+</html>
