@@ -22,6 +22,9 @@ pip install -r requierements.txt
 ## ATTENTION
 The IP address 72.62.58.41 is used because it's a VPS connected 24/7 to the blockchain. However, once another machine connects to the network through this IP, it becomes decentralized, as the peers or seeds are inherited by the other machines, thus maintaining the blockchain's decentralized structure. Therefore, if this node were to go down, it wouldn't matter. Nevertheless, use it to connect to the blockchain for now; more nodes will be enabled in the future.
 
+## SEEDS NODES VS PEERS NODES:
+If you want to get a different port each time you connect to the blockchain (and therefore lose your wallet unless you have your private key and import it), use PEER mode; otherwise, it's recommended to use SEED mode with a fixed port of 5000 (modifiable).
+
 ## Run nodes
 Bootstrap a node:
 ```bash
