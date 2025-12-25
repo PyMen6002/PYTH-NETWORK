@@ -19,6 +19,9 @@ python -m venv .venv
 pip install -r requierements.txt
 ```
 
+## ATTENTION
+The IP address 72.62.58.41 is used because it's a VPS connected 24/7 to the blockchain. However, once another machine connects to the network through this IP, it becomes decentralized, as the peers or seeds are inherited by the other machines, thus maintaining the blockchain's decentralized structure. Therefore, if this node were to go down, it wouldn't matter. Nevertheless, use it to connect to the blockchain for now; more nodes will be enabled in the future.
+
 ## Run nodes
 Bootstrap a node:
 ```bash
@@ -28,14 +31,12 @@ API_PORT=5000 P2P_PORT=6000 P2P_SEEDS=72.62.58.41:6000 python -m backend.app
 
 Windows (powershell):
 $env:API_PORT="5000"; $env:P2P_PORT="6000"; $env:P2P_SEEDS="72.62.58.41:6000"; python -m backend.app
-=======
-API_PORT=5000 P2P_PORT=6000 python -m backend.app
 
+If you get errors or it gives you a different port than 5000 each time, try this:
 Remove-Item Env:PEER -ErrorAction SilentlyContinue
 Remove-Item Env:P2P_SEEDS -ErrorAction SilentlyContinue
 $env:API_PORT="5000"; $env:P2P_HOST="localhost"; $env:P2P_PORT="6000"; python -m backend.app
 
-$env:PEER="True"; $env:API_PORT="5001"; $env:P2P_HOST="localhost"; $env:P2P_PORT="6001"; $env:P2P_SEEDS="localhost:6000"; python -m backend.app
 >>>>>>> 07fdc29 (up1)
 ```
 
