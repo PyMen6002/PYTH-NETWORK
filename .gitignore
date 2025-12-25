@@ -1,3 +1,6 @@
+# Custom ignores
+.codex_write_test
+
 # Entornos virtuales
 blockchain-env/
 venv/
